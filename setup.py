@@ -10,12 +10,12 @@ from setuptools import find_packages, setup  # noqa: E4
 
 setup(
     name='wagtailvideos',
-    version='2.4.1',
-    description="A wagtail module for uploading and displaying videos in various codecs.",
+    version='2.5.0',
+    description="A wagtail module for uploading and displaying videos & channel in various codecs.",
     long_description=readme,
     author='Neon Jungle',
-    author_email='developers@neonjungle.studio',
-    url='https://github.com/neon-jungle/wagtailvideos',
+    author_email='python.devo@gmail.com',
+    url='https://github.com/ManojDatt/wagtailvideos.git',
 
     install_requires=[
         'wagtail>=2.4',

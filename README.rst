@@ -18,7 +18,7 @@ Install using pypi
 
 .. code:: bash
 
-    pip install wagtailvideos
+    pip install git+https://github.com/ManojDatt/wagtailvideos.git@master
 
 
 Using
@@ -51,6 +51,14 @@ Implement as a ``ForeignKey`` relation, same as wagtailimages.
             FieldPanel('body'),
             VideoChooserPanel('header_video'),
         ]
+
+Video will be Private / Public:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Video will be added based on Channels:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
 In template:
 ~~~~~~~~~~~~

@@ -72,10 +72,31 @@ def get_upload_to(instance, filename):
     # Dumb proxy to instance method.
     return instance.get_upload_to(filename)
 
+@python_2_unicode_compatible
+class Channels(CollectionMember, index.Indexed,models.Model):
+    title = models.CharField(max_length=255, verbose_name=_('title'))
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def videos(self):
+        return self.abstractvideo_set.all()
+    
+    class Meta:
+        verbose_name = _('Channel')
+        verbose_name_plural = _('Channels')
 
 @python_2_unicode_compatible
 class AbstractVideo(CollectionMember, index.Indexed, models.Model):
-    title = models.CharField(max_length=255, verbose_name=_('title'))
+    PUBLIC = 'PUBLIC'
+    PRIVATE = 'PRIVATE'
+    SCOPE = (
+        (PUBLIC, _('Public')),
+        (PRIVATE, _('Private')),)
+    channel = models.ForeignKey(Channels, verbose_name=_('Channel'),  null=True, blank=True, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, verbose_name=_('title'),  null=True, blank=True)
     file = models.FileField(
         verbose_name=_('file'), upload_to=get_upload_to)
     thumbnail = models.ImageField(upload_to=get_upload_to, null=True, blank=True)
@@ -87,6 +108,7 @@ class AbstractVideo(CollectionMember, index.Indexed, models.Model):
     )
 
     tags = TaggableManager(help_text=None, blank=True, verbose_name=_('tags'))
+    scope = models.CharField(max_length=30, verbose_name=_('Scope'), default=PUBLIC, choices=SCOPE, blank=True)
 
     file_size = models.PositiveIntegerField(null=True, editable=False)
 
@@ -226,11 +248,13 @@ class AbstractVideo(CollectionMember, index.Indexed, models.Model):
 
 class Video(AbstractVideo):
     admin_form_fields = (
+        'channel',
         'title',
         'file',
         'collection',
         'thumbnail',
         'tags',
+        'scope',
     )
 
 

@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from wagtailvideos.views import chooser, multiple, videos
+from wagtailvideos.views import chooser, multiple, videos, channel
 
 app_name = 'wagtailvideos'
 urlpatterns = [
@@ -19,4 +19,9 @@ urlpatterns = [
     url(r'^chooser/$', chooser.chooser, name='chooser'),
     url(r'^chooser/(\d+)/$', chooser.video_chosen, name='video_chosen'),
     url(r'^chooser/upload/$', chooser.chooser_upload, name='chooser_upload'),
+    # channels
+    url(r'^channels$', channel.index, name='channels_index'),
+    url(r'^channels/(\d+)/$', channel.edit, name='channel_edit'),
+    url(r'^channels/(\d+)/delete/$', channel.delete, name='channel_delete'),
+    url(r'^channels/add/$', channel.add, name='channels_add'),
 ]

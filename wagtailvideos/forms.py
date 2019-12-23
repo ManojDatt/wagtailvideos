@@ -7,11 +7,15 @@ from wagtail.admin.forms.collections import (
     BaseCollectionMemberForm, collection_member_permission_formset_factory)
 
 from wagtailvideos.fields import WagtailVideoField
-from wagtailvideos.models import MediaFormats, Video, VideoQuality
+from wagtailvideos.models import MediaFormats, Video, VideoQuality, Channels
 from wagtailvideos.permissions import \
     permission_policy as video_permission_policy
 
-
+class VideoChannelForm(forms.ModelForm):
+    class Meta:
+        model = Channels
+        fields = '__all__'
+        
 class BaseVideoForm(BaseCollectionMemberForm):
     permission_policy = video_permission_policy
 

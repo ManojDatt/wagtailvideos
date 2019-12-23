@@ -1,0 +1,44 @@
+{% load wagtailadmin_tags %}
+{% load i18n %}
+{% if channels %}
+    {% if is_searching %}
+        <h2>
+        {% blocktrans count counter=channels.paginator.count %}
+            There is one match
+        {% plural %}
+            There are {{ counter }} matches
+        {% endblocktrans %}
+        </h2>
+
+        {% search_other %}
+    {% else %}
+        <h2>{% trans "Latest channels" %}</h2>
+    {% endif %}
+
+    <ul class="listing horiz images">
+        {% for channel in channels %}
+            <li>
+                <a class="image-choice" href="{% url 'wagtailvideos:channel_edit' channel.id %}">
+                    <h2>{{ channel.title|ellipsistrim:60 }}</h2>
+                    <p>{{ channel.description|truncatechars:200}}</p>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% include "wagtailadmin/shared/pagination_nav.html" with items=channels is_searching=is_searching query_string=query_string linkurl="wagtailvideos:channels_index" %}
+
+{% else %}
+    {% if is_searching %}
+        <h2>{% blocktrans %}Sorry, no channels match "<em>{{ query_string }}</em>"{% endblocktrans %}</h2>
+
+        {% search_other %}
+    {% else %}
+        {% url 'wagtailvideos:channels_add' as wagtailvideos_add_channel_url %}
+        {% if current_collection %}
+            <p>{% blocktrans %}You've not uploaded any channels in this collection. Why not <a href="{{ wagtailvideos_add_channel_url }}">add one now</a>?{% endblocktrans %}</p>
+        {% else %}
+            <p>{% blocktrans %}You've not uploaded any channels. Why not <a href="{{ wagtailvideos_add_channel_url }}">add one now</a>?{% endblocktrans %}</p>
+        {% endif %}
+    {% endif %}
+{% endif %}

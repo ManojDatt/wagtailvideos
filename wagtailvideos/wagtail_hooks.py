@@ -37,5 +37,12 @@ def register_video_permissions_panel():
 def register_images_menu_item():
     return MenuItem(
         _('Videos'), reverse('wagtailvideos:index'),
-        name='videos', classnames='icon icon-media', order=300
+        name='videos', classnames='icon icon-media', order=2
+    )
+
+
+@hooks.register('register_admin_menu_item')
+def register_menu_channel():
+    return MenuItem(
+        _('Channels'), reverse('wagtailvideos:channels_index'), classnames='icon icon-placeholder', order=1
     )
