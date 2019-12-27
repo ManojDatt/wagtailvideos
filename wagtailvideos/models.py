@@ -26,7 +26,7 @@ from wagtail.admin.utils import get_object_usage
 from wagtail.core.models import CollectionMember
 from wagtail.search import index
 from wagtail.search.queryset import SearchableQuerySetMixin
-
+from django.contrib.contenttypes.fields import GenericRelation
 from wagtailvideos import ffmpeg
 
 logger = logging.getLogger(__name__)
@@ -247,6 +247,7 @@ class AbstractVideo(CollectionMember, index.Indexed, models.Model):
 
 
 class Video(AbstractVideo):
+    comments = GenericRelation("home.Comment", related_query_name='comments')
     admin_form_fields = (
         'channel',
         'title',
