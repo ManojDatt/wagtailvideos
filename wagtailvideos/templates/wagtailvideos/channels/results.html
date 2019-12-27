@@ -19,7 +19,7 @@
         {% for channel in channels %}
             <li>
                 <a class="image-choice" href="{% url 'wagtailvideos:channel_edit' channel.id %}">
-                    <h2>{{ channel.title|ellipsistrim:60 }}</h2>
+                    <h2>{{ channel.title|truncatechars:100 }}</h2>
                     <p>{{ channel.description|truncatechars:200}}</p>
                 </a>
             </li>

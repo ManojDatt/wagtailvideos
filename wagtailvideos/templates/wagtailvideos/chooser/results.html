@@ -24,7 +24,7 @@
                         <img width="165" height="165" class="show-transparency">
                         {% endif %}
                     </div>
-                    <h3>{{ video.title|ellipsistrim:60 }}</h3>
+                    <h3>{{ video.title|truncatechars:100 }}</h3>
                 </a>
             </li>
         {% endfor %}
