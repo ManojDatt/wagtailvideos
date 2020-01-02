@@ -7,7 +7,7 @@ import subprocess
 import tempfile
 import threading
 from contextlib import contextmanager
-
+from datetime import datetime
 from django.conf import settings
 from django.core.exceptions import SuspiciousFileOperation
 from django.core.files.base import ContentFile
@@ -109,6 +109,21 @@ class AbstractVideo(CollectionMember, index.Indexed, models.Model):
 
     tags = TaggableManager(help_text=None, blank=True, verbose_name=_('tags'))
     scope = models.CharField(max_length=30, verbose_name=_('Scope'), default=PUBLIC, choices=SCOPE, blank=True)
+    # new fields
+    area = models.ForeignKey("documents.Area", verbose_name=_('Area'), on_delete=models.SET_NULL, null=True, blank=True)
+    subject = models.ForeignKey("documents.Subject", verbose_name=_('Subject'), on_delete=models.SET_NULL, null=True, blank=True)
+    topic = models.ForeignKey("documents.Topic",verbose_name=_('Topic'), on_delete=models.SET_NULL, null=True, blank=True)
+    subtopic = models.ForeignKey("documents.SubTopic", verbose_name=_('SubTopic'), on_delete=models.SET_NULL, null=True, blank=True)
+    nature = models.ForeignKey("documents.Natures",verbose_name=_('Natures'), on_delete=models.SET_NULL, null=True, blank=True)
+
+    author = models.CharField(max_length=100, verbose_name=_('Author'),  null=True, blank=True)
+    author_profession = models.CharField(max_length=200, verbose_name=_('Author Profession'),  null=True, blank=True)
+    validity_start = models.DateField(verbose_name=_('Validity Start'), default=datetime.now)
+    validity_end = models.DateField(verbose_name=_('Validity End'), default=datetime.now)
+    synthesis = models.TextField(verbose_name=_('Synthesis'), default="")
+    publication_at = models.DateTimeField(verbose_name=_('Publish At'), default=datetime.now)
+    expiration_at = models.DateField(verbose_name=_('Publish End'), default=datetime.now)
+    republication_at = models.DateTimeField(verbose_name=_('Republish At'), default=datetime.now)
 
     file_size = models.PositiveIntegerField(null=True, editable=False)
 
@@ -248,14 +263,28 @@ class AbstractVideo(CollectionMember, index.Indexed, models.Model):
 
 class Video(AbstractVideo):
     comments = GenericRelation("home.Comment", related_query_name='comments')
+    media_views = GenericRelation("dashboard.MediaView", related_query_name='media_views')
     admin_form_fields = (
         'channel',
         'title',
+        'area',
+        'subject',
+        'topic',
+        'subtopic',
+        'nature',
         'file',
         'collection',
         'thumbnail',
         'tags',
         'scope',
+        'author',
+        'author_profession',
+        'validity_start',
+        'validity_end',
+        'synthesis',
+        'publication_at',
+        'expiration_at',
+        'republication_at',
     )
 
 
