@@ -76,7 +76,8 @@ def get_upload_to(instance, filename):
 class Channels(CollectionMember, index.Indexed,models.Model):
     title = models.CharField(max_length=255, verbose_name=_('title'))
     description = models.TextField(blank=True)
-
+    created_at = models.DateTimeField(verbose_name=_('created at'), auto_now_add=True, db_index=True)
+    
     def __str__(self):
         return self.title
 
