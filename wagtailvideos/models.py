@@ -262,6 +262,7 @@ class AbstractVideo(CollectionMember, index.Indexed, models.Model):
 
 
 class Video(AbstractVideo):
+    favorites = GenericRelation("users.Favorite", related_query_name='fav_videos')
     comments = GenericRelation("home.Comment", related_query_name='comments')
     media_views = GenericRelation("dashboard.MediaView", related_query_name='media_views')
     admin_form_fields = (
