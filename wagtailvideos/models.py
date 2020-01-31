@@ -96,7 +96,7 @@ class AbstractVideo(CollectionMember, index.Indexed, models.Model):
     SCOPE = (
         (PUBLIC, _('Public')),
         (PRIVATE, _('Private')),)
-    channel = models.ForeignKey(Channels, verbose_name=_('Channel'),  null=True, blank=True, on_delete=models.CASCADE)
+    channel = models.ForeignKey(Channels, verbose_name=_('Channel'),  null=True, blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=255, verbose_name=_('title'),  null=True, blank=True)
     file = models.FileField(
         verbose_name=_('file'), upload_to=get_upload_to)
