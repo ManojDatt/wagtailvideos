@@ -28,7 +28,7 @@ from wagtail.search import index
 from wagtail.search.queryset import SearchableQuerySetMixin
 from django.contrib.contenttypes.fields import GenericRelation
 from wagtailvideos import ffmpeg
-
+from django.utils.functional import cached_property
 logger = logging.getLogger(__name__)
 
 
@@ -257,6 +257,13 @@ class AbstractVideo(CollectionMember, index.Indexed, models.Model):
         else:
             pass  # TODO Queue?
 
+    @cached_property
+    def total_views(self):
+        try:
+            return sum(self.media_views.values_list('views', flat=True))
+        except:
+            return 0
+            
     class Meta:
         abstract = True
         ordering = ['-created_at']
