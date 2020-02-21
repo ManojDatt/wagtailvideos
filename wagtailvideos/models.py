@@ -273,6 +273,8 @@ class Video(AbstractVideo):
     favorites = GenericRelation("users.Favorite", related_query_name='fav_videos')
     comments = GenericRelation("home.Comment", related_query_name='comments')
     media_views = GenericRelation("dashboard.MediaView", related_query_name='media_views')
+    notifications = GenericRelation("dashboard.Notifications", related_query_name="image_notifications")
+    
     admin_form_fields = (
         'channel',
         'title',
