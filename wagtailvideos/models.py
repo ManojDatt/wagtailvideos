@@ -263,6 +263,13 @@ class AbstractVideo(CollectionMember, index.Indexed, models.Model):
             return sum(self.media_views.values_list('views', flat=True))
         except:
             return 0
+
+    def clean(self):
+        if not self.validity_start:
+            raise ValidationError({"validity_start": _('This field is required.')})
+
+        if not self.publication_at:
+            raise ValidationError({"publication_at": _('This field is required.')})
             
     class Meta:
         abstract = True
