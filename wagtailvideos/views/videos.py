@@ -138,10 +138,12 @@ def delete(request, video_id):
     video = get_object_or_404(Video, id=video_id)
 
     if request.POST:
-        video.delete()
-        messages.success(request, _("Video '{0}' deleted.").format(video.title))
-        return redirect('wagtailvideos:index')
-
+        try:
+            video.delete()
+            messages.success(request, _("Video '{0}' deleted.").format(video.title))
+            return redirect('wagtailvideos:index')
+        except Exception as ex:
+            messages.success(request, _("{0}").format(str(ex)))
     return render(request, "wagtailvideos/videos/confirm_delete.html", {
         'video': video,
     })
