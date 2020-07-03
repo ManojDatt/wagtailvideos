@@ -143,7 +143,7 @@ def delete(request, video_id):
             messages.success(request, _("Video '{0}' deleted.").format(video.title))
             return redirect('wagtailvideos:index')
         except Exception as ex:
-            messages.success(request, _("{0}").format(str(ex)))
+            messages.error(request, _("{0}").format(str(ex)))
     return render(request, "wagtailvideos/videos/confirm_delete.html", {
         'video': video,
     })

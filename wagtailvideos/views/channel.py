@@ -93,9 +93,12 @@ def delete(request, channel_id):
     channel = get_object_or_404(Channel, id=channel_id)
 
     if request.POST:
-        channel.delete()
-        messages.success(request, _("Channel '{0}' deleted.").format(channel.title))
-        return redirect('wagtailvideos:channels_index')
+        try:
+            channel.delete()
+            messages.success(request, _("Channel '{0}' deleted.").format(channel.title))
+            return redirect('wagtailvideos:channels_index')
+        except Exception as ex:
+            messages.error(request, _("{0}").format(str(ex)))
 
     return render(request, "wagtailvideos/channels/confirm_delete.html", {
         'channel': channel,
